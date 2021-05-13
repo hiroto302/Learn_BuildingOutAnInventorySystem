@@ -49,6 +49,7 @@ public class CharacterInventory : MonoBehaviour
         if (!addedItem)
         {
             // TODO: try to pick up
+            TryPickUp();
         }
     }
 
@@ -56,12 +57,35 @@ public class CharacterInventory : MonoBehaviour
     
     public void StoreItem(ItemPickUp itemToStore)
     {
+        addedItem = false;
+
+        if((charStats.characterDefinition.currentEncumbrance +
+            itemToStore.itemDefinition.itemWeight) <= charStats.characterDefinition.maxEncumbrance)
+        {
+            itemEntry.invEntry = itemToStore;
+            itemEntry.stackSize = 1;
+            itemEntry.hbSprite = itemToStore.itemDefinition.itemIcon;
+            // addedItem = false;
+            itemToStore.gameObject.SetActive(false);
+        }
 
     }
 
     void TryPickUp()
     {
+        bool itsInInv = true;
 
+        if(itemEntry.invEntry)
+        {
+            if(itemsInInventory.Count == 0)
+            {
+                addedItem = AddItemToInv(addedItem);
+            }
+            else
+            {
+                
+            }
+        }
     }
 
     bool AddItemToInv(bool finishedAdding)
